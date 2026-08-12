@@ -1,6 +1,7 @@
 # Banking Agent
 
-A banking agent using FastAPI, LangGraph, and LangChain with database and document search tools.
+An Agentic Banking Assistant that uses LangGraph to intelligently route user queries and retrieve answers from structured banking data (SQL) and uploaded documents (RAG).
+It supports multi-step tool calling, combines SQL and knowledge-base results when required, and provides grounded responses through a Gemini-powered agent.
 
 ## Features
 - Chat endpoint for banking questions
