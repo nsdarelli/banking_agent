@@ -1,4 +1,5 @@
 import logging
+import time
 from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
@@ -41,15 +42,22 @@ def chat(request: ChatRequest):
         raise HTTPException(status_code=400, detail="Query cannot be empty.")
     logger.info("Chat request received from User.")
 
+    start_time = time.perf_counter()
+
     try:
         answer = run_orchestrator(query)
 
+        elapsed_time = time.perf_counter() - start_time
+        logger.info("Request Completed in %.3f seconds", elapsed_time)
+
         return {
-            "answer": answer[0]["text"],
+            "response": answer[0]["text"],
         }
 
     except Exception as e:
+        elapsed_time = time.perf_counter() - start_time
         logger.exception("Chat request failed.")
+        logger.exception("Request Failed in %.3f seconds", elapsed_time)
         raise HTTPException(status_code=500, detail="Unable to process the request.")
 
 # Document Upload
